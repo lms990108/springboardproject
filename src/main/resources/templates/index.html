@@ -23,19 +23,32 @@
             align-items: center;
             width: 100%;
         }
+        .content {
+            min-height: calc(100vh - 180px);
+            padding: 20px 0;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
         <span class="logo">My Blog</span>
     </a>
 </nav>
 
 <!-- 바디 -->
-<div class="container my-4">
+<div class="container content">
     <div class="text-center">
         <button class="btn btn-dark" onclick="saveReq()">글작성</button>
         <button class="btn btn-dark" onclick="listReq()">글목록</button>
@@ -44,9 +57,9 @@
 </div>
 
 <!-- 풋터 -->
-<footer class="bg-light py-3 text-center">
+<footer class="bg-light py-3 footer">
     <div class="container">
-        &copy; 32193073 이민섭. 오픈소스 SW활용 블로그 제작 프로젝트.
+        &copy; 32193073 이민섭. 오픈소스 SW 활용 블로그 제작 프로젝트.
     </div>
 </footer>
 
@@ -67,4 +80,3 @@
 </body>
 
 </html>
-
