@@ -71,6 +71,17 @@
             background-color: transparent;
             color: #000;
         }
+        .col {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .input-field {
+            width: 100%;
+        }
+        .custom-button {
+            width: 30%;
+        }
+
     </style>
 </head>
 
@@ -82,24 +93,33 @@
     </a>
 </nav>
 
-<div class="container content">
+<div class="container content" style="margin-top: 30px">
     <form action="/board/save" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="boardWriter">Writer:</label>
-            <input type="text" class="form-control input-field" id="boardWriter" name="boardWriter">
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group">
+                    <input type="text" class="form-control input-field" id="boardWriter" name="boardWriter"
+                           placeholder="Writer:">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <input type="text" class="form-control input-field" id="boardPass" name="boardPass"
+                           placeholder="Password:">
+                </div>
+            </div>
+            <div class="col">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="boardPass">Pass:</label>
-            <input type="password" class="form-control input-field" id="boardPass" name="boardPass">
-        </div>
+
         <div class="form-group">
             <label for="boardTitle">Title:</label>
-            <input type="text" class="form-control input-field" id="boardTitle" name="boardTitle">
+            <input type="text" class="form-control" id="boardTitle" name="boardTitle">
         </div>
 
         <div class="form-group">
             <label for="boardContents">Contents:</label>
-            <textarea class="form-control" id="boardContents" name="boardContents" rows="5"></textarea>
+            <textarea class="form-control" style="height:calc(20vw)" id="boardContents" name="boardContents" rows="5"></textarea>
         </div>
         <div class="form-group">
             <label for="boardFile">File:</label>
@@ -109,7 +129,8 @@
             </div>
         </div>
         <div class="form-group text-right">
-            <button type="submit" class="btn btn-primary custom-button">글작성</button>
+            <button type="submit" class="btn btn-primary custom-button" style="padding: 8px 12px; font-size: 14px; width: 80px;">작성</button>
+            <button type="button" class="btn btn-primary custom-button" onclick="window.location.href='/'" style="padding: 8px 12px; font-size: 14px; width: 80px; background-color: lightskyblue">취소</button>
         </div>
 
     </form>
@@ -124,7 +145,31 @@
 
 <!-- 부트스트랩 JS CDN 링크 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    // 입력 박스 초기화
+    function initializeInputs() {
+        var inputLabels = document.querySelectorAll('.form-control');
+        inputLabels.forEach(function(input) {
+            var label = input.previousElementSibling;
+            var placeholder = label.textContent;
+
+            input.addEventListener('focus', function() {
+                label.style.display = 'none';
+            });
+
+            input.addEventListener('blur', function() {
+                if (input.value === '') {
+                    label.style.display = 'block';
+                }
+            });
+
+            label.textContent = placeholder;
+        });
+    }
+
+    // 페이지 로드 시 초기화 함수 호출
+    window.addEventListener('load', initializeInputs);
+</script>
 </body>
 
 </html>
-
