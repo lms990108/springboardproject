@@ -1,0 +1,20 @@
+# 서버 포트 설정
+server:
+  port: 8082
+
+# database 연동 설정
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/OpenSourceBoardDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: leeminseop
+    password: minseop@12
+  thymeleaf:
+    cache: false
+
+  # spring data jpa 설정
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
