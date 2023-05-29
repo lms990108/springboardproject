@@ -7,68 +7,101 @@
     <!-- 부트스트랩 CDN 링크 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
-        .logo {
-            font-weight: bold;
-            font-size: 24px;
-            color: #333;
-        }
-        .navbar {
-            background-color: #f8f9fa;
-            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-        .navbar-brand {
+        #sidebar {
+            width: 200px;
+            height: 100vh;
+            background: #f0f0f0;
+            float: left;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            border-radius: 50%;
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        .profile-image img {
             width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
         }
-        .content {
-            min-height: calc(100vh - 180px);
-            padding: 20px 0;
-        }
-        .footer {
-            background-color: #f8f9fa;
-            padding: 20px;
+
+        #main-content {
+            max-width: 600px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
             text-align: center;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            padding-left: 130px;
+        }
+
+
+        #main-content h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        #main-content p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .link {
+            font-size: 22px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .link:hover {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
-<!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">
-        <span class="logo">My Blog</span>
-    </a>
-</nav>
-
-<!-- 바디 -->
-<div class="container content">
-    <div class="text-center">
-        <button class="btn btn-dark" onclick="saveReq()">글 작성</button>
-<!--        <button class="btn btn-dark" onclick="listReq()">글목록</button>-->
-        <button class="btn btn-dark" onclick="pagingReq()">글 목록</button>
+<!--sidebar testarea-->
+<div id="sidebar">
+    <div class="profile-image">
+        <img src="/img/단대곰로고.jpeg" alt="Your Photo">
     </div>
+    <a class="link" onclick="saveReq()" style="margin-top: 10px; color: darkslateblue">글 작성</a>
+    <a class="link" onclick="pagingReq()" style="margin-top: 10px; color: darkslateblue">글 목록</a>
 </div>
 
-<!-- 풋터 -->
-<footer class="bg-light py-3 footer">
-    <div class="container">
-        &copy; 32193073 이민섭. 오픈소스 SW 활용 블로그 제작 프로젝트.
-    </div>
-</footer>
+<div id="main-content">
+    <h1 style="font-size: 60px;">Min Seop Lee</h1>
+    <p style="font-size: 16px;">단국대학교</p>
+    <p style="font-size: 16px;">컴퓨터공학과</p>
+    <p style="font-size: 16px;">32193073</p>
+    <br>
+    <br>
+    <p style="text-align: left">
+        오픈소스 SW활용 기말 프로젝트 입니다.<br>
+        게시판을 만들어 글을 작성, 수정, 삭제, 조회 하며<br>
+        댓글을 남길 수 있는 게시판을 만들었습니다.
+    </p>
+</div>
+
 
 <script>
     const saveReq = () => {
         location.href = "/board/save";
-    }
-    const listReq = () => {
-        location.href = "/board/";
     }
     const pagingReq = () => {
         location.href = "/board/paging";
