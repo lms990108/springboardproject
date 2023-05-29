@@ -3,70 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <title>detail</title>
-  <!-- jquery cdn -->
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <!-- 부트스트랩 CDN 링크 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .logo {
+      font-weight: bold;
+      font-size: 24px;
+      color: #333;
+    }
+    .navbar {
+      background-color: #f8f9fa;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .navbar-brand {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+    .content {
+      padding: 20px;
+    }
+    .id-col {
+      width: 20%;
+    }
+    .other-col {
+      width: 30%;
+    }
+    table.table tr:first-child th {
+      border-bottom-width: 4px;
+    }
+    /* 마지막 행의 경계선 스타일 */
+    table.table tr:last-child td {
+      border-top-width: 4px;
+    }
+  </style>
 </head>
 <body>
-<table>
-  <tr>
-    <th>id</th>
-    <td th:text="${board.id}"></td>
-  </tr>
-  <tr>
-    <th>title</th>
-    <td th:text="${board.boardTitle}"></td>
-  </tr>
-  <tr>
-    <th>writer</th>
-    <td th:text="${board.boardWriter}"></td>
-  </tr>
-  <tr>
-    <th>date</th>
-    <td th:text="${board.boardCreatedTime}"></td>
-  </tr>
-  <tr>
-    <th>hits</th>
-    <td th:text="${board.boardHits}"></td>
-  </tr>
-  <tr>
-    <th>contents</th>
-    <td th:text="${board.boardContents}"></td>
-  </tr>
-  <tr th:if="${board.fileAttached == 1}">
-    <th>image</th>
-    <td><img th:src="@{|/upload/${board.storedFileName}|}" alt=""></td>
-  </tr>
-</table>
-<button onclick="listReq()">목록</button>
-<button onclick="updateReq()">수정</button>
-<button onclick="deleteReq()">삭제</button>
+<!-- 네비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">
+    <span class="logo">My Blog</span>
+  </a>
+</nav>
 
-<!-- 댓글 작성 부분 -->
-<div id="comment-write">
-  <input type="text" id="commentWriter" placeholder="작성자">
-  <input type="text" id="commentContents" placeholder="내용">
-  <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
-</div>
-
-<!-- 댓글 출력 부분 -->
-<div id="comment-list">
-  <table>
+<div class="container content">
+  <table class="table">
     <tr>
-      <th>댓글번호</th>
-      <th>작성자</th>
-      <th>내용</th>
-      <th>작성시간</th>
+      <td colspan="4" class="title-row" style="text-align: left" th:text="${board.boardTitle}"></td>
     </tr>
-    <tr th:each="comment: ${commentList}">
-      <td th:text="${comment.id}"></td>
-      <td th:text="${comment.commentWriter}"></td>
-      <td th:text="${comment.commentContents}"></td>
-      <td th:text="${comment.commentCreatedTime}"></td>
+    <tr>
+      <td class="id-col" th:text="'Writer(id) : ' + ${board.boardWriter + ' (' + board.id + ')'}"></td>
+      <td colspan="3" class="other-col" style="text-align: right">
+        <span th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm')}"></span>
+        <span th:text="' | 조회수: ' + ${board.boardHits}"></span>
+      </td>
+
+    </tr>
+    <tr>
+      <td colspan="4" class="contents-row" style="text-align: left" th:text="${board.boardContents}"></td>
+    </tr>
+    <tr th:if="${board.fileAttached == 1}">
+      <td class="id-col">image</td>
+      <td colspan="3" class="other-col">
+        <img th:src="@{|/upload/${board.storedFileName}|}" alt="">
+      </td>
     </tr>
   </table>
+
+
+  <!-- 댓글 작성 부분 -->
+  <div id="comment-write" class="mt-4">
+    <div class="form-row">
+      <div class="col-2">
+        <input type="text" id="commentWriter" class="form-control" placeholder="작성자">
+      </div>
+      <div class="col pr-0">
+        <input type="text" id="commentContents" class="form-control" placeholder="내용">
+      </div>
+      <div class="col-auto">
+        <button id="comment-write-btn" class="btn btn-dark" onclick="commentWrite()">댓글작성</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-right mt-4">
+    <button type="button" class="btn btn-dark" onclick="listReq()">목록</button>
+    <button type="button" class="btn btn-dark" onclick="updateReq()">수정</button>
+    <button type="button" class="btn btn-dark" onclick="deleteReq()">삭제</button>
+  </div>
+
+  <!-- 댓글 출력 부분 -->
+  <style>
+    .table {
+      table-layout: fixed;
+    }
+
+    .table td:last-child,
+    .table th:last-child {
+      text-align: right;
+    }
+  </style>
+
+  <div id="comment-list" class="mt-4">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th>댓글번호</th>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>작성시간</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="comment: ${commentList}">
+        <td th:text="${comment.id}"></td>
+        <td th:text="${comment.commentWriter}"></td>
+        <td th:text="${comment.commentContents}"></td>
+        <td th:text="${#temporals.format(comment.commentCreatedTime, 'yyyy-MM-dd HH:mm')}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
 </div>
 
-</body>
+<!-- 풋터 -->
+<footer class="bg-light py-3 footer">
+  <div class="container">
+    &copy; 32193073 이민섭. 오픈소스 SW 활용 블로그 제작 프로젝트.
+  </div>
+</footer>
+
+<!-- 부트스트랩 및 jQuery 스크립트 -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script th:inline="javascript">
   const commentWrite = () => {
     const writer = document.getElementById("commentWriter").value;
@@ -122,7 +204,23 @@
   const deleteReq = () => {
     console.log("삭제 요청");
     const id = [[${board.id}]];
+
+    // 댓글이 있는지 확인
+    const hasComments = [[${commentList.size() > 0}]];
+
+    if (hasComments) {
+      alert("댓글이 존재하여 삭제할 수 없습니다.");
+      return; // 삭제 중단
+    }
+
+    // 삭제 요청
     location.href = "/board/delete/" + id;
   }
+  // const deleteReq = () => {
+  //   console.log("삭제 요청");
+  //   const id = [[${board.id}]];
+  //   location.href = "/board/delete/" + id;
+  // }
 </script>
+</body>
 </html>

@@ -3,17 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <title>update</title>
+    <!-- 부트스트랩 CDN 링크 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+            color: #333;
+        }
+        .navbar {
+            background-color: #f8f9fa;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .navbar-brand {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .content {
+            min-height: calc(100vh - 180px);
+            padding: 20px 0;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-<form action="/board/update" method="post" name="updateForm">
-    <input type="hidden" name="id" th:value="${boardUpdate.id}">
-    writer: <input type="text" name="boardWriter" th:value="${boardUpdate.boardWriter}" readonly> <br>
-    pass: <input type="text" name="boardPass" id="boardPass"> <br>
-    title: <input type="text" name="boardTitle" th:value="${boardUpdate.boardTitle}"> <br>
-    contents: <textarea name="boardContents" cols="30" rows="10" th:text="${boardUpdate.boardContents}"></textarea> <br>
-    <input type="hidden" name="boardHits" th:value="${boardUpdate.boardHits}">
-    <input type="button" value="글수정" onclick="boardUpdate()">
-</form>
+<!-- 네비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+        <span class="logo">My Blog</span>
+    </a>
+</nav>
+<div class="container content">
+    <form action="/board/update" method="post" name="updateForm">
+        <input type="hidden" name="id" th:value="${boardUpdate.id}">
+        <div class="form-group">
+            <label for="boardWriter">작성자</label>
+            <input type="text" class="form-control" id="boardWriter" name="boardWriter" th:value="${boardUpdate.boardWriter}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="boardPass">비밀번호</label>
+            <input type="text" class="form-control" id="boardPass" name="boardPass">
+        </div>
+        <div class="form-group">
+            <label for="boardTitle">제목</label>
+            <input type="text" class="form-control" id="boardTitle" name="boardTitle" th:value="${boardUpdate.boardTitle}">
+        </div>
+        <div class="form-group">
+            <label for="boardContents">내용</label>
+            <textarea class="form-control" id="boardContents" name="boardContents" rows="5" th:text="${boardUpdate.boardContents}"></textarea>
+        </div>
+        <input type="hidden" name="boardHits" th:value="${boardUpdate.boardHits}">
+        <button type="button" class="btn btn-dark" onclick="boardUpdate()">글수정</button>
+    </form>
+</div>
+
+<!-- 풋터 -->
+<footer class="bg-light py-3 footer">
+    <div class="container">
+        &copy; 32193073 이민섭. 오픈소스 SW 활용 블로그 제작 프로젝트.
+    </div>
+</footer>
+
 <script th:inline="javascript">
     const boardUpdate = () => {
         const pass = [[${boardUpdate.boardPass}]];
@@ -26,3 +87,4 @@
     }
 </script>
 </body>
+</html>

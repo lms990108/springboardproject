@@ -77,12 +77,12 @@ public class BoardController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         boardService.delete(id);
-        return "redirect:/board/";
+        return "redirect:/board/paging";
     }
 
     // /board/paging?page=1
     @GetMapping("/paging")
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+    public String paging(@PageableDefault(page = 1, size = 10) Pageable pageable, Model model) {
 //        pageable.getPageNumber();
         Page<BoardDTO> boardList = boardService.paging(pageable);
         int blockLimit = 3;
